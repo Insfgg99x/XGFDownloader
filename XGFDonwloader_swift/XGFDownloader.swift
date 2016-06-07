@@ -7,10 +7,13 @@
 //
 
 import Foundation
+import UIKit
 /**
  *  下载完成的通知名
  */
 let FGGDownloadTaskDidFinishDownloadingNotification="FGGDownloadTaskDidFinishDownloadingNotification";
+ /// 内存空间不足的通知名
+let FGGDownloaderInsufficientSystemFreeSpaceNotification="FGGDownloaderInsufficientSystemFreeSpaceNotification"
 
 /// 下载过程中回调的代码块，会多次调用
 typealias ProcessHandle=(progress:Float,sizeString:String?,speedString:String?)->Void
@@ -41,6 +44,7 @@ class XGFDownloader: NSObject,NSURLConnectionDataDelegate,NSURLConnectionDelegat
         self.lastSize=0
         self.timer=NSTimer.scheduledTimerWithTimeInterval(0.1, target: self, selector: #selector(XGFDownloader.getGrowthSize), userInfo: nil, repeats: true)
     }
+    
     //与计算网速相关的方法
     func getGrowthSize() {
         do{
@@ -54,15 +58,7 @@ class XGFDownloader: NSObject,NSURLConnectionDataDelegate,NSURLConnectionDelegat
         }
     }
     
-    /**
-     断点下载
-     
-     - parameter urlString:  下载的地址
-     - parameter toPath:     下载文件保存路径
-     - parameter process:    下载过程的回调，会多次调用
-     - parameter completion: 下载完成的回调
-     - parameter failure:    下载失败的回调
-     */
+    //MARK:断点下载
     func download(urlString:String?,toPath:String?,process:ProcessHandle?,completion:CompletionHandle?,failure:FailureHandle?){
         
         if (toPath == nil) || (urlString==nil){
@@ -99,13 +95,7 @@ class XGFDownloader: NSObject,NSURLConnectionDataDelegate,NSURLConnectionDelegat
         let downloader=XGFDownloader();
         return downloader;
     }
-    /**
-     获取上一次的下载进度
-     
-     - parameter url: 下载链接
-     
-     - returns: 下载进度
-     */
+
     class func lastProgress(url:String?)->Float{
         
         if(url==nil){
@@ -123,13 +113,6 @@ class XGFDownloader: NSObject,NSURLConnectionDataDelegate,NSURLConnectionDelegat
         }
     }
     
-    /**
-     获取文件大小及总大小组成的字符串
-     
-     - parameter url: 下载链接
-     
-     - returns: 大小字符串 如：12.10M/100.60M
-     */
     class func filesSize(url:String?)->String{
         
         if(url==nil){
@@ -191,6 +174,19 @@ class XGFDownloader: NSObject,NSURLConnectionDataDelegate,NSURLConnectionDelegat
     func connection(connection: NSURLConnection, didReceiveData data: NSData){
         
         self.writeHandle?.seekToEndOfFile()
+        
+        let systemFreeSpace=self.systemAvailableSpace()
+        if(systemFreeSpace<1024*1024*20){
+            let alert:UIAlertController=UIAlertController.init(title: "提示", message: "可用存储空间不足20M", preferredStyle: UIAlertControllerStyle.Alert)
+            let confirmAction=UIAlertAction.init(title: "确定", style: UIAlertActionStyle.Default, handler: nil)
+            alert.addAction(confirmAction)
+            let root=UIApplication.sharedApplication().keyWindow?.rootViewController
+            root?.presentViewController(alert, animated: true, completion: nil)
+            self.cancel()
+            //发送系统存储空间不足的通知，用户可自行注册通知，做出相应停止下载，更新界面的逻辑
+            NSNotificationCenter.defaultCenter().postNotificationName(FGGDownloaderInsufficientSystemFreeSpaceNotification, object: nil)
+            return
+        }
         self.writeHandle?.writeData(data)
         do{
             let dict:NSDictionary=try NSFileManager.defaultManager().attributesOfItemAtPath(self.destination_path!)
@@ -226,6 +222,21 @@ class XGFDownloader: NSObject,NSURLConnectionDataDelegate,NSURLConnectionDelegat
         if self.completion != nil {
             self.completion!()
         }
+    }
+    //MARK:获取系统可用存储空间
+    func systemAvailableSpace()->NSInteger{
+        
+        var freeSpace=0
+        let docPath=NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true).last
+        do {
+            
+            let dict:NSDictionary=try NSFileManager.defaultManager().attributesOfFileSystemForPath(docPath!)
+            freeSpace=(dict.objectForKey(NSFileSystemFreeSize)?.integerValue)!
+        }
+        catch {
+            
+        }
+        return freeSpace
     }
 }
 
