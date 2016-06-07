@@ -1,7 +1,7 @@
 # XGFDownloadManager<br>
 FGGDownloader的Swift版本，用于断点下载，大文件下载，支持后台下载<br>
 <br>
-![演示](https://github.com/Insfgg99x/FGGDownloader/blob/master/demo.gif)<br>
+![演示](https://github.com/Insfgg99x/XGFDownloader/blob/master/demo.gif)<br>
 <br>
 XGFDownloadManager用法简介<br>
 ---------------------------------------------------------------------------------------------<br>
