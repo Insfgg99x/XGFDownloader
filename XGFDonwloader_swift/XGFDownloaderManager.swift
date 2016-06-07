@@ -34,6 +34,13 @@ class XGFDownloaderManager: NSObject {
         notificationCenter.addObserver(self, selector:#selector(XGFDownloaderManager.downloadTaskWillResign(_:)), name: UIApplicationWillResignActiveNotification, object: nil)
         notificationCenter.addObserver(self, selector:#selector(XGFDownloaderManager.downloadTaskDidBecomActive(_:)), name: UIApplicationDidBecomeActiveNotification, object: nil)
         notificationCenter.addObserver(self, selector:#selector(XGFDownloaderManager.downloadTaskWillBeTerminate(_:)), name: UIApplicationWillTerminateNotification, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(XGFDownloaderManager.systemInsufficientSpace(_:)), name: FGGDownloaderInsufficientSystemFreeSpaceNotification, object: nil)
+    }
+    func systemInsufficientSpace(sender:NSNotification){
+        
+        let dict:NSDictionary=sender.userInfo!
+        let downloadUrlString=dict .objectForKey("urlString") as! String
+        self .cancelDownloadTaskWithUrlString(downloadUrlString)
     }
     
     func downloadTaskWillResign(sender:NSNotification) {

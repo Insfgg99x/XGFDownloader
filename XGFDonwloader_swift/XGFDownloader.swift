@@ -182,9 +182,10 @@ class XGFDownloader: NSObject,NSURLConnectionDataDelegate,NSURLConnectionDelegat
             alert.addAction(confirmAction)
             let root=UIApplication.sharedApplication().keyWindow?.rootViewController
             root?.presentViewController(alert, animated: true, completion: nil)
-            self.cancel()
-            //发送系统存储空间不足的通知，用户可自行注册通知，做出相应停止下载，更新界面的逻辑
-            NSNotificationCenter.defaultCenter().postNotificationName(FGGDownloaderInsufficientSystemFreeSpaceNotification, object: nil)
+            //发送系统存储空间不足的通知
+            let dict:Dictionary<String,String>=["urlString":self.urlString!]
+            NSNotificationCenter.defaultCenter().postNotificationName(FGGDownloaderInsufficientSystemFreeSpaceNotification, object: nil ,userInfo: dict)
+            
             return
         }
         self.writeHandle?.writeData(data)
