@@ -159,7 +159,7 @@ class XGFDownloader: NSObject,NSURLConnectionDataDelegate,NSURLConnectionDelegat
         }
         else if length>=1024*1024&&length<1024*1024*1024 {
             
-            return String(format: "%.1fM",Float(length!/(1024*1024)))
+            return String(format: "%.1fM",Float(length!)/(1024.0*1024.0))
         }
         else{
             return String(format: "%.1fG",Float(length!/(1024*1024*1024)))
@@ -186,7 +186,7 @@ class XGFDownloader: NSObject,NSURLConnectionDataDelegate,NSURLConnectionDelegat
             NSFileManager.defaultManager().createFileAtPath(self.destination_path!, contents: nil, attributes: nil)
         }
         self.writeHandle=NSFileHandle.init(forWritingAtPath: self.destination_path!)
-        print(self.destination_path)
+        //print(self.destination_path)
     }
     func connection(connection: NSURLConnection, didReceiveData data: NSData){
         
