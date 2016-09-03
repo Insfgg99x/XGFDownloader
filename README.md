@@ -1,7 +1,7 @@
 # XGFDownloadManager<br>
 ![演示](https://github.com/Insfgg99x/XGFDownloader/blob/master/demo.gif)<br>
-#Introduction:
-Swift Edition for FGGDownloader, A framework used for resume from breaking point downloading based on NSURLConnection with background downloading supported
+#Introduction 简介:
+Swift Edition for FGGDownloader, A framework used for resume from breaking point downloading based on NSURLConnection with background downloading supported<br>
 FGGDownloader的swift版本一个基于NSURLConnection，用于断点下载及支持后台下载的框架
 
 #Install 安装:
@@ -10,7 +10,7 @@ Cocopods:
 <br>
 Manual 手动:
 download [FGGDownloader](https://github.com/Insfgg99x/FGGDownloader.git) and drag it into your project。
-#Useage:
+#Useage 使用:
 ####1.Import XGFDownloadManager header file.在项目中导入import XGFDownloadManager 头文件。<br>
 ####2.SET progress in the function create UI with: `XGFDownloadManager.sharedManager.lastProgressWithUrl(url)`搭建UI时，设置显示进度的UIProgressView的进值:`XGFDownloadManager.sharedManager.lastProgressWithUrl(url)`<br>
 <br>
