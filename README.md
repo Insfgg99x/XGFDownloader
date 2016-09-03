@@ -1,7 +1,8 @@
 # XGFDownloadManager<br>
 ######Swift Edition for FGGDownloader, A framework used for resume from breaking point downloading based on NSURLConnection with background downloading supported.
-######FGGDownloader的swift版本一个基于NSURLConnection，用于断点下载及支持后台下载的框架
 [![Cocoapods Compatible](https://img.shields.io/cocoapods/v/SnapKit.svg)](https://img.shields.io/cocoapods/v/SnapKit.svg)
+######FGGDownloader的swift版本一个基于NSURLConnection，用于断点下载及支持后台下载的框架
+
 ![演示](https://github.com/Insfgg99x/XGFDownloader/blob/master/demo.gif)<br>
 <br>
 #Install 安装:
