@@ -1,17 +1,14 @@
 # XGFDownloadManager<br>
-SwiftEdition for FGGDownloader ,used for breaking point downloading,background downloading supported.
-FGGDownloader的Swift版本，用于断点下载，支持后台下载<br>
-<br>
 ![演示](https://github.com/Insfgg99x/XGFDownloader/blob/master/demo.gif)<br>
-#Introduction
-A framework used for resume from breaking point downloading based on NSURLConnection with background downloading supported
-一个基于NSURLConnection，用于断点下载及支持后台下载的框架
+#Introduction:
+Swift Edition for FGGDownloader, A framework used for resume from breaking point downloading based on NSURLConnection with background downloading supported
+FGGDownloader的swift版本一个基于NSURLConnection，用于断点下载及支持后台下载的框架
 
-#Install:
+#Install 安装:
 Cocopods:
 `pod 'FGGDownloader', '~> 1.0'`<br>
 <br>
-Manual:
+Manual 手动:
 download [FGGDownloader](https://github.com/Insfgg99x/FGGDownloader.git) and drag it into your project。
 #Useage:
 ####1.Import XGFDownloadManager header file.在项目中导入import XGFDownloadManager 头文件。<br>
