@@ -9,7 +9,7 @@
 <br>
 #Install 安装:
 Cocopods:
-`pod 'FGGDownloader', '~> 1.0'`<br>
+`pod 'XGFDownloader', '~> 1.0'`<br>
 <br>
 Manual:
 download [FGGDownloader](https://github.com/Insfgg99x/FGGDownloader.git) and drag it into your project。
