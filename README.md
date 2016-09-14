@@ -8,11 +8,12 @@
 ![演示](https://github.com/Insfgg99x/XGFDownloader/blob/master/demo.gif)<br>
 <br>
 #Install 安装:
-Cocopods:
-`pod 'FGGDownloader', '~> 1.0'`<br>
+Cocopods:<br>
+`use_frameworks!`<br>
+`pod 'XGFDownloader', '~> 1.1'`<br>
 <br>
 Manual:
-download [FGGDownloader](https://github.com/Insfgg99x/FGGDownloader.git) and drag it into your project。
+download [XGFDownloader](https://github.com/Insfgg99x/XGFDownloader) and drag it into your project。
 #Useage 使用:
 1.Import XGFDownloadManager header file.在项目中导入import XGFDownloadManager 头文件。<br>
 
