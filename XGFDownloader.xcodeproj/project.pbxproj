@@ -7,18 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4574536B1D89415D00B312CD /* XGFDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457453691D89415D00B312CD /* XGFDownloader.swift */; };
+		4574536C1D89415D00B312CD /* XGFDownloaderManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4574536A1D89415D00B312CD /* XGFDownloaderManager.swift */; };
 		45AD3CF01D0567610020DCB6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD3CEF1D0567610020DCB6 /* AppDelegate.swift */; };
 		45AD3CF21D0567610020DCB6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD3CF11D0567610020DCB6 /* ViewController.swift */; };
 		45AD3CF51D0567610020DCB6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 45AD3CF31D0567610020DCB6 /* Main.storyboard */; };
 		45AD3CF71D0567610020DCB6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 45AD3CF61D0567610020DCB6 /* Assets.xcassets */; };
 		45AD3CFA1D0567610020DCB6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 45AD3CF81D0567610020DCB6 /* LaunchScreen.storyboard */; };
-		45AD3D031D0567CF0020DCB6 /* XGFDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD3D021D0567CF0020DCB6 /* XGFDownloader.swift */; };
-		45C4700E1D0594EC0037997D /* XGFDownloaderManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C4700D1D0594EC0037997D /* XGFDownloaderManager.swift */; };
 		45C470101D05AA650037997D /* TaskModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C4700F1D05AA650037997D /* TaskModel.swift */; };
 		45C470121D05ACA40037997D /* TaskCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C470111D05ACA40037997D /* TaskCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		457453691D89415D00B312CD /* XGFDownloader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XGFDownloader.swift; sourceTree = "<group>"; };
+		4574536A1D89415D00B312CD /* XGFDownloaderManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XGFDownloaderManager.swift; sourceTree = "<group>"; };
 		45AD3CEC1D0567610020DCB6 /* XGFDownloader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XGFDownloader.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		45AD3CEF1D0567610020DCB6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		45AD3CF11D0567610020DCB6 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -26,8 +28,6 @@
 		45AD3CF61D0567610020DCB6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		45AD3CF91D0567610020DCB6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		45AD3CFB1D0567620020DCB6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		45AD3D021D0567CF0020DCB6 /* XGFDownloader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XGFDownloader.swift; sourceTree = "<group>"; };
-		45C4700D1D0594EC0037997D /* XGFDownloaderManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XGFDownloaderManager.swift; sourceTree = "<group>"; };
 		45C4700F1D05AA650037997D /* TaskModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskModel.swift; sourceTree = "<group>"; };
 		45C470111D05ACA40037997D /* TaskCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -43,10 +43,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		457453681D89415D00B312CD /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				457453691D89415D00B312CD /* XGFDownloader.swift */,
+				4574536A1D89415D00B312CD /* XGFDownloaderManager.swift */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
 		45AD3CE31D0567610020DCB6 = {
 			isa = PBXGroup;
 			children = (
-				45AD3D011D0567B80020DCB6 /* XGFDonwloader_swift */,
+				457453681D89415D00B312CD /* Classes */,
 				45AD3CEE1D0567610020DCB6 /* XGFDownloader */,
 				45AD3CED1D0567610020DCB6 /* Products */,
 			);
@@ -73,15 +82,6 @@
 				45AD3CFB1D0567620020DCB6 /* Info.plist */,
 			);
 			path = XGFDownloader;
-			sourceTree = "<group>";
-		};
-		45AD3D011D0567B80020DCB6 /* XGFDonwloader_swift */ = {
-			isa = PBXGroup;
-			children = (
-				45AD3D021D0567CF0020DCB6 /* XGFDownloader.swift */,
-				45C4700D1D0594EC0037997D /* XGFDownloaderManager.swift */,
-			);
-			path = XGFDonwloader_swift;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -157,12 +157,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				45C4700E1D0594EC0037997D /* XGFDownloaderManager.swift in Sources */,
-				45AD3D031D0567CF0020DCB6 /* XGFDownloader.swift in Sources */,
 				45C470101D05AA650037997D /* TaskModel.swift in Sources */,
 				45AD3CF21D0567610020DCB6 /* ViewController.swift in Sources */,
+				4574536C1D89415D00B312CD /* XGFDownloaderManager.swift in Sources */,
 				45C470121D05ACA40037997D /* TaskCell.swift in Sources */,
 				45AD3CF01D0567610020DCB6 /* AppDelegate.swift in Sources */,
+				4574536B1D89415D00B312CD /* XGFDownloader.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
