@@ -15,10 +15,11 @@ Swift Version>=3.0
 ![](https://github.com/Insfgg99x/XGFDownloader/blob/master/demo.gif)<br>
 <br>
 #Install 安装:
-Cocopods:<br>
-`use_frameworks!`<br>
-`pod 'XGFDownloader', '~> 1.1'`<br>
-<br>
+Cocopods:
+use_frameworks!
+pod 'XGFDownloader'
+```
+
 Manual:
 download [XGFDownloader](https://github.com/Insfgg99x/XGFDownloader) and drag it into your project。
 #Useage 使用:
