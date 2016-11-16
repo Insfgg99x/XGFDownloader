@@ -10,6 +10,7 @@ FGGDownloader的swift版本一个基于NSURLConnection，用于断点下载及�
 ```
 iOS Version>=8.0
 Xcode Version>=8.0
+Swift Version>=3.0
 ```
 ![](https://github.com/Insfgg99x/XGFDownloader/blob/master/demo.gif)<br>
 <br>
