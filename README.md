@@ -15,13 +15,14 @@ Swift Version>=3.0
 ![](https://github.com/Insfgg99x/XGFDownloader/blob/master/demo.gif)<br>
 <br>
 #Install 安装:
-```
 Cocopods:
+```
 use_frameworks!
 pod 'XGFDownloader'
 ```
 
 Manual:
+
 download [XGFDownloader](https://github.com/Insfgg99x/XGFDownloader) and drag it into your project。
 #Useage 使用:
 1.SET progress in the function create UI with: `XGFDownloadManager.sharedManager.lastProgressWithUrl(url)`
