@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
 s.name         = "XGFDownloader"
-s.version      = "1.1"
+s.version      = “2.0”
 s.summary      = "XGFDownloader is used for resume from break point downloading build with swift."
 s.homepage     = "https://github.com/Insfgg99x/XGFDownloader"
 s.license      = "MIT"
