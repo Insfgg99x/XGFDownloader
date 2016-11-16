@@ -19,34 +19,35 @@ class XGFDownloaderManager: NSObject {
     static var sharedManager:XGFDownloaderManager=XGFDownloaderManager()
     
     var taskDict:NSMutableDictionary?
-    var queue:NSMutableArray?
+    var queue:[String]?
     var backgroundTaskId:UIBackgroundTaskIdentifier?
     
     override init() {
         
         super.init()
-        self.taskDict=NSMutableDictionary()
-        self.queue=NSMutableArray()
+        self.taskDict=NSMutableDictionary.init()
+        self.queue=Array.init()
         self.backgroundTaskId=UIBackgroundTaskInvalid
         
-        let notificationCenter=NSNotificationCenter.defaultCenter()
-        notificationCenter.addObserver(self, selector: #selector(XGFDownloaderManager.downloadTaskDidFinishDownloading(_:)), name: FGGDownloadTaskDidFinishDownloadingNotification, object: nil)
-        notificationCenter.addObserver(self, selector:#selector(XGFDownloaderManager.downloadTaskWillResign(_:)), name: UIApplicationWillResignActiveNotification, object: nil)
-        notificationCenter.addObserver(self, selector:#selector(XGFDownloaderManager.downloadTaskDidBecomActive(_:)), name: UIApplicationDidBecomeActiveNotification, object: nil)
-        notificationCenter.addObserver(self, selector:#selector(XGFDownloaderManager.downloadTaskWillBeTerminate(_:)), name: UIApplicationWillTerminateNotification, object: nil)
-        notificationCenter.addObserver(self, selector: #selector(XGFDownloaderManager.systemInsufficientSpace(_:)), name: FGGDownloaderInsufficientSystemFreeSpaceNotification, object: nil)
+        let notificationCenter=NotificationCenter.default
+        notificationCenter .addObserver(self, selector: #selector(downloadTaskDidFinishDownloading(sender:)), name: NSNotification.Name(rawValue: FGGDownloadTaskDidFinishDownloadingNotification), object: nil)
+        notificationCenter.addObserver(self, selector: #selector(downloadTaskWillResign(sender:)), name: NSNotification.Name.UIApplicationWillResignActive, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(downloadTaskDidBecomActive(sender:)), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(downloadTaskWillBeTerminate(sender:)), name: NSNotification.Name.UIApplicationWillTerminate, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(systemInsufficientSpace(sender:)), name: NSNotification.Name(rawValue: FGGDownloaderInsufficientSystemFreeSpaceNotification), object: nil)
     }
     func systemInsufficientSpace(sender:NSNotification){
         
-        let dict:NSDictionary=sender.userInfo!
-        let downloadUrlString=dict .objectForKey("urlString") as! String
-        self .cancelDownloadTaskWithUrlString(downloadUrlString)
+        let dict:Dictionary?=sender.userInfo
+        let downloadUrlString:String?=dict?["urlString"] as! String?;
+        self .cancelDownloadTaskWithUrlString(urlString: downloadUrlString!)
     }
     
     func downloadTaskWillResign(sender:NSNotification) {
         
-        if self.taskDict?.count>0{
-            self.backgroundTaskId=UIApplication.sharedApplication().beginBackgroundTaskWithExpirationHandler({ 
+        if (self.taskDict?.count)!>0{
+            
+            self.backgroundTaskId=UIApplication.shared.beginBackgroundTask(expirationHandler: {
                 
             });
         }
@@ -57,7 +58,7 @@ class XGFDownloaderManager: NSObject {
             
             return
         }
-        UIApplication.sharedApplication().endBackgroundTask(self.backgroundTaskId!)
+        UIApplication.shared.endBackgroundTask(self.backgroundTaskId!)
         self.backgroundTaskId=UIBackgroundTaskInvalid
     }
     
@@ -68,10 +69,11 @@ class XGFDownloaderManager: NSObject {
     
     func downloadTaskDidFinishDownloading(sender:NSNotification) {
         
-        let dict:NSDictionary=sender.userInfo!
-        let downloadUrlString=dict .objectForKey("urlString")
-        self.sychronizedFunc(self) { 
-          self.taskDict?.removeObjectForKey(downloadUrlString!)
+        let dict:Dictionary=sender.userInfo!
+        let downloadUrlString:String=dict["urlString"] as! String
+        self.sychronizedFunc(lock: self) {
+
+            taskDict?.removeObject(forKey: downloadUrlString)
         }
         /*
         if self.taskDict?.count<kFGGDwonloadMaxTaskCount {
@@ -87,11 +89,11 @@ class XGFDownloaderManager: NSObject {
     
     func cancelAllTasks() {
         
-        self.taskDict?.enumerateKeysAndObjectsUsingBlock({ (key, obj, stop) in
+        self.taskDict?.enumerateKeysAndObjects({ (key, obj, stop) in
             
             let downloader:XGFDownloader=obj as! XGFDownloader
             downloader.cancel()
-            self.taskDict?.removeObjectForKey(key)
+            self.taskDict?.removeObject(forKey: key)
         })
     }
     
@@ -108,10 +110,11 @@ class XGFDownloaderManager: NSObject {
         }
          */
         let downloader=XGFDownloader.downloader()
-        self.sychronizedFunc(self) {
-            self.taskDict?.setObject(downloader, forKey: urlString!)
+        self.sychronizedFunc(lock: self) {
+            
+            self.taskDict?.setObject(downloader, forKey: urlString! as NSCopying)
         }
-        downloader.download(urlString, toPath: toPath, process: process, completion: completion, failure: failure)
+        downloader.download(urlString: urlString, toPath: toPath, process: process, completion: completion, failure: failure)
     }
     //MARK:仿写OC的@synchronized (self)
     func sychronizedFunc(lock:AnyObject?,function:()->()) {
@@ -123,32 +126,33 @@ class XGFDownloaderManager: NSObject {
     //MARK:取消任务
     func cancelDownloadTaskWithUrlString(urlString:String) {
         
-        let downloader=self.taskDict?.objectForKey(urlString)
+        let downloader:XGFDownloader?=self.taskDict?.object(forKey: urlString) as! XGFDownloader?
         downloader?.cancel()
-        self.sychronizedFunc(self) { 
-            self.taskDict?.removeObjectForKey(urlString)
+        self.sychronizedFunc(lock: self) {
+            self.taskDict?.removeObject(forKey: urlString)
         }
     }
     
     //MARK:彻底删除任务
     func removeTaskForUrl(urlString:String, filePath:String) {
-        let downloader=self.taskDict?.objectForKey(urlString)
-        downloader?.cancel()
-        self.sychronizedFunc(self) {
-            self.taskDict?.removeObjectForKey(urlString)
+        
+        let downloader:XGFDownloader?=self.taskDict?.object(forKey: urlString) as! XGFDownloader?
+        downloader?.cancel();
+        self.sychronizedFunc(lock: self) {
+            self.taskDict?.removeObject(forKey: urlString)
         }
         
-        let usd=NSUserDefaults.standardUserDefaults()
+        let usd=UserDefaults.standard
         let progressKey=String(format: "%@progress",urlString)
         let lenthKey=String(format: "%@totalLength",urlString)
-        usd.removeObjectForKey(progressKey)
-        usd.removeObjectForKey(lenthKey)
+        usd.removeObject(forKey: progressKey)
+        usd.removeObject(forKey: lenthKey)
         usd.synchronize()
         
-        let exist=NSFileManager.defaultManager().fileExistsAtPath(filePath)
+        let exist=FileManager.default.fileExists(atPath: filePath)
         if exist {
             do {
-                try NSFileManager.defaultManager().removeItemAtPath(filePath)
+                try FileManager.default.removeItem(atPath: filePath)
             }
             catch{
                 
@@ -157,11 +161,11 @@ class XGFDownloaderManager: NSObject {
     }
     
     func lastProgress(urlString:String) ->Float {
-        return XGFDownloader.lastProgress(urlString)
+        return XGFDownloader.lastProgress(url: urlString)
     }
     
     func filesSize(urlString:String) -> String {
-        return XGFDownloader.filesSize(urlString)
+        return XGFDownloader.filesSize(url: urlString)
     }
 }
 
