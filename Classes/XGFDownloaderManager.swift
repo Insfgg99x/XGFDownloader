@@ -16,7 +16,7 @@ let kFGGDwonloadMaxTaskCount=3
 
 class XGFDownloaderManager: NSObject {
 
-    static var sharedManager:XGFDownloaderManager=XGFDownloaderManager()
+    static var shared:XGFDownloaderManager=XGFDownloaderManager()
     
     var taskDict:NSMutableDictionary?
     var queue:[String]?
@@ -71,7 +71,7 @@ class XGFDownloaderManager: NSObject {
         
         let dict:Dictionary=sender.userInfo!
         let downloadUrlString:String=dict["urlString"] as! String
-        self.sychronizedFunc(lock: self) {
+        self.sychronized(lock: self) {
 
             taskDict?.removeObject(forKey: downloadUrlString)
         }
@@ -110,14 +110,14 @@ class XGFDownloaderManager: NSObject {
         }
          */
         let downloader=XGFDownloader.downloader()
-        self.sychronizedFunc(lock: self) {
+        self.sychronized(lock: self) {
             
             self.taskDict?.setObject(downloader, forKey: urlString! as NSCopying)
         }
         downloader.download(urlString: urlString, toPath: toPath, process: process, completion: completion, failure: failure)
     }
     //MARK:仿写OC的@synchronized (self)
-    func sychronizedFunc(lock:AnyObject?,function:()->()) {
+    func sychronized(lock:AnyObject?,function:()->()) {
         
         objc_sync_enter(lock)
         function()
@@ -128,7 +128,7 @@ class XGFDownloaderManager: NSObject {
         
         let downloader:XGFDownloader?=self.taskDict?.object(forKey: urlString) as! XGFDownloader?
         downloader?.cancel()
-        self.sychronizedFunc(lock: self) {
+        self.sychronized(lock: self) {
             self.taskDict?.removeObject(forKey: urlString)
         }
     }
@@ -138,7 +138,7 @@ class XGFDownloaderManager: NSObject {
         
         let downloader:XGFDownloader?=self.taskDict?.object(forKey: urlString) as! XGFDownloader?
         downloader?.cancel();
-        self.sychronizedFunc(lock: self) {
+        self.sychronized(lock: self) {
             self.taskDict?.removeObject(forKey: urlString)
         }
         

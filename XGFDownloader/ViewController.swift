@@ -87,7 +87,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
             
             sender?.setTitle("暂停", for:UIControlState.normal)
             
-            XGFDownloaderManager.sharedManager.download(urlString: model!.urlString, toPath: model!.destinationPath, process: { (progress, sizeString, speedString) in
+            XGFDownloaderManager.shared.download(urlString: model!.urlString, toPath: model!.destinationPath, process: { (progress, sizeString, speedString) in
                 cell.progressView?.progress=progress;
                 cell.progressLabel?.text=String(format: "%.1f%%",progress*100)
                 cell.sizeLabel?.text=sizeString
@@ -109,7 +109,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
                 
             }, failure: { (error) in
                 
-                XGFDownloaderManager.sharedManager.cancelDownloadTaskWithUrlString(urlString: (model?.urlString)!)
+                XGFDownloaderManager.shared.cancelDownloadTaskWithUrlString(urlString: (model?.urlString)!)
                 sender?.setTitle("恢复", for: UIControlState.normal)
                 cell.speedLabel?.isHidden=true
                 let alert=UIAlertView.init(title:"ERROR", message: nil, delegate: nil, cancelButtonTitle: "确定")
@@ -118,7 +118,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         }
         else if (currentTitle=="暂停"){
             sender?.setTitle("恢复", for: UIControlState.normal)
-            XGFDownloaderManager.sharedManager.cancelDownloadTaskWithUrlString(urlString: (model?.urlString)!)
+            XGFDownloaderManager.shared.cancelDownloadTaskWithUrlString(urlString: (model?.urlString)!)
             cell.speedLabel?.isHidden=true
         }
     }
@@ -128,7 +128,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         
         let task=self.dataArray?.object(at: indexPath.row) as! TaskModel
-        XGFDownloaderManager.sharedManager.removeTaskForUrl(urlString: task.urlString, filePath: task.destinationPath)
+        XGFDownloaderManager.shared.removeTaskForUrl(urlString: task.urlString, filePath: task.destinationPath)
         self.dataArray?.removeObject(at: indexPath.row)
         self.tbView?.reloadData()
     }

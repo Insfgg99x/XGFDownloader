@@ -25,9 +25,9 @@ class TaskCell: UITableViewCell {
         let exist=FileManager.default.fileExists(atPath: model.destinationPath!)
         if exist {
             
-            let progress=XGFDownloaderManager.sharedManager.lastProgress(urlString: model.urlString!)
+            let progress=XGFDownloaderManager.shared.lastProgress(urlString: model.urlString!)
             progressView?.progress=progress
-            sizeLabel?.text=XGFDownloaderManager.sharedManager.filesSize(urlString: model.urlString!)
+            sizeLabel?.text=XGFDownloaderManager.shared.filesSize(urlString: model.urlString!)
             progressLabel?.text=String(format: "%.1f%%",progress*100)
         }
         if progressView?.progress==1.0 {
