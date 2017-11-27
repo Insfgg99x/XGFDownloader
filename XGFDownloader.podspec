@@ -1,11 +1,11 @@
 Pod::Spec.new do |s|
 s.name         = "XGFDownloader"
-s.version      = "2.0"
+s.version      = "3.0"
 s.summary      = "XGFDownloader is used for resume from break point downloading build with swift."
 s.homepage     = "https://github.com/Insfgg99x/XGFDownloader"
 s.license      = "MIT"
 s.authors      = { "CGPointZero" => "newbox0512@yahoo.com" }
-s.source       = { :git => "https://github.com/Insfgg99x/XGFDownloader.git", :tag => "2.0"}
+s.source       = { :git => "https://github.com/Insfgg99x/XGFDownloader.git", :tag => "3.0"}
 #s.frameworks  = 'Foundation','UIKit'
 s.ios.deployment_target = '8.0'
 s.source_files = 'Classes/*.swift'
