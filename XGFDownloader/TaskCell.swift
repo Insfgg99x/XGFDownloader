@@ -87,7 +87,7 @@ class TaskCell: UITableViewCell {
         speedLabel?.isHidden=true
     }
     
-    func downloadAction(sender:UIButton?)  {
+    @objc func downloadAction(sender:UIButton?)  {
         
         if (self.downloadBlock != nil){
             

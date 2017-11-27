@@ -74,9 +74,10 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         let taskCell=cell! as TaskCell
         let model=self.dataArray?.object(at: indexPath.row) as! TaskModel
         taskCell.cellWithModel(model: model)
+        weak var wkself = self
         cell?.downloadBlock = { (sender) -> Void  in
             
-            self.downloadWithSender(sender: sender, model: model,cell: cell!)
+            wkself?.downloadWithSender(sender: sender, model: model,cell: cell!)
         }
         cell?.selectionStyle=UITableViewCellSelectionStyle.none
         return cell!

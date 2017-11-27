@@ -46,7 +46,7 @@ class XGFDownloader: NSObject,NSURLConnectionDataDelegate,NSURLConnectionDelegat
     }
     
     //与计算网速相关的方法
-    func getGrowthSize() {
+    @objc func getGrowthSize() {
         do{
             let dict:Dictionary=try FileManager.default.attributesOfItem(atPath: self.destination_path!)
             

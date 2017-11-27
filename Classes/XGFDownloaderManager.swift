@@ -36,14 +36,14 @@ class XGFDownloaderManager: NSObject {
         notificationCenter.addObserver(self, selector: #selector(downloadTaskWillBeTerminate(sender:)), name: NSNotification.Name.UIApplicationWillTerminate, object: nil)
         notificationCenter.addObserver(self, selector: #selector(systemInsufficientSpace(sender:)), name: NSNotification.Name(rawValue: FGGDownloaderInsufficientSystemFreeSpaceNotification), object: nil)
     }
-    func systemInsufficientSpace(sender:NSNotification){
+    @objc func systemInsufficientSpace(sender:NSNotification){
         
         let dict:Dictionary?=sender.userInfo
         let downloadUrlString:String?=dict?["urlString"] as! String?;
         self .cancelDownloadTaskWithUrlString(urlString: downloadUrlString!)
     }
     
-    func downloadTaskWillResign(sender:NSNotification) {
+    @objc func downloadTaskWillResign(sender:NSNotification) {
         
         if (self.taskDict?.count)!>0{
             
@@ -53,7 +53,7 @@ class XGFDownloaderManager: NSObject {
         }
     }
     
-    func downloadTaskDidBecomActive(sender:NSNotification){
+    @objc func downloadTaskDidBecomActive(sender:NSNotification){
         if self.backgroundTaskId==UIBackgroundTaskInvalid{
             
             return
@@ -62,12 +62,12 @@ class XGFDownloaderManager: NSObject {
         self.backgroundTaskId=UIBackgroundTaskInvalid
     }
     
-    func downloadTaskWillBeTerminate(sender:NSNotification) {
+    @objc func downloadTaskWillBeTerminate(sender:NSNotification) {
         
         self.cancelAllTasks()
     }
     
-    func downloadTaskDidFinishDownloading(sender:NSNotification) {
+    @objc func downloadTaskDidFinishDownloading(sender:NSNotification) {
         
         let dict:Dictionary=sender.userInfo!
         let downloadUrlString:String=dict["urlString"] as! String
@@ -117,11 +117,16 @@ class XGFDownloaderManager: NSObject {
         downloader.download(urlString: urlString, toPath: toPath, process: process, completion: completion, failure: failure)
     }
     //MARK:仿写OC的@synchronized (self)
-    func sychronized(lock:AnyObject?,function:()->()) {
+    func sychronized(lock:Any?,function:()->()) {
         
-        objc_sync_enter(lock)
+        guard lock != nil else {
+            
+            function()
+            return
+        }
+        objc_sync_enter(lock!)
         function()
-        objc_sync_exit(lock)
+        objc_sync_exit(lock!)
     }
     //MARK:取消任务
     func cancelDownloadTaskWithUrlString(urlString:String) {
